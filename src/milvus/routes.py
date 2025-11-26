@@ -9,6 +9,7 @@ from src.db.core import get_session,init_db
 from sqlalchemy.exc import IntegrityError  
 from sqlmodel import desc, select
 from src.db.models import UploadedFile
+from src.config import HASH_CHUNK_SIZE,MEDIA_DIR
 
 
 milvus_router = APIRouter()
@@ -26,8 +27,7 @@ async def on_startup():  # ← Make it async
     await init_db()  # ← Add this line
     print("✅ Database tables created")
 
-HASH_CHUNK_SIZE = 8192
-MEDIA_DIR = "./milvus/media"
+
 
 
 async def compute_file_hash_stream(file: UploadFile, chunk_size: int = HASH_CHUNK_SIZE) -> str:
